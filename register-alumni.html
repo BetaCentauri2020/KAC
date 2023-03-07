@@ -36,6 +36,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
         <!-- responsive css -->
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+		<link rel="stylesheet" type="text/css" href="css/loader.css">
+		<!-- <link rel="stylesheet" type="text/css" href="css/loader-recent.css"> -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -88,8 +90,14 @@
 					                  	         <h4 class="title">Alumni Registration Form</h4>
 					                  	    </div>
 					                  	     <div class="form-group text-center">
+													<div class="overlay"></div>
+													<div class="spanner">
+														<p>Processing...</p>
+													</div>
+													<div class="loader" hidden="Hide"></div>
+													 
 					                  	         <form id="" class="contact-form" method="post" action="" name="alumni-form">
-					                  	             <div class="row">
+					                  	            <div class="row">
 					                  	                 <div class="col-lg-6">
 					                  	                    <input class="from-control" name="Name" type="text" placeholder="Name" id="" required="required">
 					                  	                 </div>
@@ -110,7 +118,6 @@
 					                  	                    	<option>2017</option>
 					                  	                    	<option>2016</option>
 					                  	                    	<option>2015</option>
-											<option>2014</option>
 					                  	                    </select>
 					                  	                 </div>
 					                                </div>
@@ -144,8 +151,7 @@
 					                  	                 <div class="col-lg-6">
 					                  	                    <select class="from-control" name="Department">
 					                  	                    	<option>-- Department / Branch --</option>
-					                  	                    	<option value="MCA">MCA</option>
-					                  	                    	<option value="B.Tech">B.Tech</option>
+					                  	                    	<option value="BSc">BSc</option>
 					                  	                    </select>
 					                  	                 </div>
 					                  	             </div>
@@ -172,28 +178,29 @@
 				                                    	</div>
 				                                    	<div class="col-lg-12 mb-3">
 				                                    		<div class="form-check form-check-inline">
-															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio21" value="Employment">
-															  <label class="form-check-label" for="inlineRadio21">Employment</label>
+															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio21" value="Employment" onclick="EnableDisableTxtBox()">
+															  <label class="form-check-label" for="Employment">Employment</label>
 															</div>
 															<div class="form-check form-check-inline">
-															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio22" value="Higher_Studies">
+															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio22" value="Higher_Studies" onclick="EnableDisableTxtBox()">
 															  <label class="form-check-label" for="inlineRadio22">Higher Studies</label>
 															</div>
 															<div class="form-check form-check-inline">
-															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio23" value="Self_Employed">
+															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio23" value="Self_Employed" onclick="EnableDisableTxtBox()">
 															  <label class="form-check-label" for="inlineRadio23">Self Employed</label>
 															</div>
 															<div class="form-check form-check-inline">
-															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio24" value="Others">
+															  <input class="form-check-input" type="radio" name="Alumni_Status" id="inlineRadio24" value="Others" onclick="EnableDisableTxtBox()">
 															  <label class="form-check-label" for="inlineRadio24">Others</label>
 															</div>
 				                                    	</div>
 				                                    </div>
-										 <div class="row">
-										    <div class="col-lg-12">
-					                  	                    <input class="from-control" name="CompanyName" type="text" placeholder="Your Company Name" id="" disabled>
-					                  	                 </div>
+													<div class="row">
+														<div class="col-lg-12">
+															<input class="form-control" name="CompanyName" type="text" placeholder="Comapny Name" id="campanyname" disabled="disabled">
+														 </div>
 													</div>
+												</br>
 				                                    <!-- <div class="row">
 				                                    	<div class="col-md-12">
 				                                    		<h5 class="mb-2">Upload Photo</h5>
@@ -204,7 +211,7 @@
 					                  	                 </div>
 				                                    </div> -->
 					                  	                 <div class="col-lg-12">
-					                  	                    <input type="submit" value="Submit" class="wpcf7-form-control wpcf7-submit mb-3">
+					                  	                    <input type="submit" value="Submit" class="wpcf7-form-control wpcf7-submit mb-3" id="submit-btn">
 					                  	                 </div>
 														<div class="row mb-3">
 															<div class="col-lg-12">
@@ -212,6 +219,7 @@
 						                  	                 </div>
 														</div>
 					                  	             </div>
+													 
 					                  	         </form>
 					                  	     </div>
 					                  	 </div>
@@ -280,16 +288,53 @@
 		      });
 	    </script>
 		<script>
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec'
+			const scriptURL = 'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec'
             const form = document.forms['alumni-form']
-          
+            // var spanner=document.getElementsByClassName("spanner");
+			// var overlay=document.getElementsByClassName("overlay");
+			var submitBtn=document.getElementById("submit-btn");
+			var loader=document.getElementById("loader");
+
             form.addEventListener('submit', e => {
+				
               e.preventDefault()
+			//   spanner.classList.addClass("show");
+			//   overlay.classList.addClass("show");
               fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => alert("Alumni Registration Success!!!"))
                 .catch(error => console.error('Error!', error.message))
+				// spanner.classList.removeClass("show");
+				// overlay.classList.removeClass("show");
+				submitBtn.disabled=true;
+				loader.style.display="block";
+
+				loader.style.display = 'none';
+				submitBtn.disabled = false;
+
             })
           </script>
+		  	
+		<script type="text/javascript">
+			// $(function(){
+			// 	$("input[name='Alumni_Status']").click(function(){
+			// 		$("#campanyname").prop("disabled",true);
+			// 		$('#campanyname').val("");
+			// 		if($(this).hasClass('form-control')){
+			// 			$("#companyname").prop("disabled",false);
+			// 		}
+			// 	});
+			// });
+			function EnableDisableTxtBox(){
+				var companyName=document.getElementById("inlineRadio22");
+				var txtBox=document.getElementById("campanyname");
+				txtBox.disabled=companyName.checked? true:false;
+				txtBox.value="";
+				if(!txtBox.disabled){
+					txtBox.focus();
+				}
+			}
+		</script>
+		 
     </body>
 
 </html>
