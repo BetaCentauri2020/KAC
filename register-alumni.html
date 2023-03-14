@@ -288,32 +288,24 @@
 		        //   $("#advanceOption").text("Hide Additional Query");
 		      });
 	    </script>
+			<!--Form data enter into Sheet  -->
 		<script>
-			const scriptURL = 'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec'
-            const form = document.forms['alumni-form']
-            // var spanner=document.getElementsByClassName("spanner");
-			// var overlay=document.getElementsByClassName("overlay");
-			var submitBtn=document.getElementById("submit-btn");
-			var loader=document.getElementById("loader");
-
-            form.addEventListener('submit', e => {
-				
-              e.preventDefault()
-			//   spanner.classList.addClass("show");
-			//   overlay.classList.addClass("show");
-              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => alert("Alumni Registration Success!!!"))
-                .catch(error => console.error('Error!', error.message))
-				// spanner.classList.removeClass("show");
-				// overlay.classList.removeClass("show");
-				submitBtn.disabled=true;
-				loader.style.display="block";
-
-				loader.style.display = 'none';
-				submitBtn.disabled = false;
-
-            })
-          </script>
+			jQuery('#alumniFrm').on('submit',function(e){
+				e.preventDefault();
+				jQuery('#btnSubmit').attr('disabled',true);
+				alert('Alumni Registration Success!!!');
+				jQuery.ajax({
+					url:'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec',
+					type:'post',
+					data:jQuery('#alumniFrm').serialize(),
+					success:function(result){
+						jQuery('#alumniFrm')[0].reset();
+						jQuery('#btnSubmit').attr('disabled',false);
+						//window.location.href='';
+					}
+				})
+			})
+		</script>
 		  	
 		<script type="text/javascript">
 			// $(function(){
