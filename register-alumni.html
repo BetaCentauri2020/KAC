@@ -42,7 +42,7 @@
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-	<style>
+		<style>
 			.button {
 				background-color: #4CAF50; /* Green */
 				border: none;
@@ -105,13 +105,13 @@
 					                  	         <h4 class="title">Alumni Registration Form</h4>
 					                  	    </div>
 					                  	     <div class="form-group text-center">
-														<!-- <div class="overlay"></div>
+													<!-- <div class="overlay"></div>
 													<div class="spanner">
 														<p>Processing...</p>
 													</div>
 													<div class="loader" hidden="Hide"></div> -->
 													 
-					                  	         <form id="" class="contact-form" method="post" action="" name="alumni-form">
+					                  	         <form id="alumniFrm" class="contact-form" method="post" action="" name="alumni-form">
 					                  	            <div class="row">
 					                  	                 <div class="col-lg-6">
 					                  	                    <input class="from-control" name="Name" type="text" placeholder="Name" id="" required="required">
@@ -125,7 +125,7 @@
 					                  	                 <div class="col-lg-6">
 					                  	                    <select class="from-control" name="YearOfPassing">
 					                  	                    	<option selected="selected">-- Year of Passing --</option>
-					                  	                    	<option value="2023">2023</option>
+																<option value="2023">2023</option>
 					                  	                    	<option value="2022">2022</option>
 					                  	                    	<option value="2021">2021</option>
 					                  	                    	<option value="2020">2020</option>
@@ -226,9 +226,13 @@
 					                  	                    <p><small class="text-danger">(.jpg or .png and less then 1MB size files are accepted)</small></p>
 					                  	                 </div>
 				                                    </div> -->
-					                  	                 <div class="col-lg-12">
-											 <button type="submit" id="btnSubmit" class="button">Submit</button>
-									     		</div>
+																								<!-- input submit -->
+					                  	                 <!-- <div class="col-lg-12">
+					                  	                    <input type="submit" value="Submit" class="wpcf7-form-control wpcf7-submit mb-3" id="submit-btn">
+					                  	                 </div> -->
+														   <div class="col-lg-12">
+															<button type="submit" id="btnSubmit" class="button">Submit</button>
+														 </div>
 														<div class="row mb-3">
 															<div class="col-lg-12">
 						                  	                 	<a href="index.html"><i class="fa fa-home">&nbsp;</i>Go to Home</a>
@@ -243,13 +247,14 @@
 		                		</div>
 		                	</div>
 		                </div>
-		            </div>
+					</div>
 		        </div>
 		        <!-- Register End -->
 
 		    </div>
 		</div>
         
+		<div id="loader"></div>
 
         <!-- modernizr js -->
         <script src="js/modernizr-2.8.3.min.js"></script>
@@ -303,24 +308,52 @@
 		        //   $("#advanceOption").text("Hide Additional Query");
 		      });
 	    </script>
-			<!--Form data enter into Sheet  -->
-		<script>
-			jQuery('#alumniFrm').on('submit',function(e){
-				e.preventDefault();
-				jQuery('#btnSubmit').attr('disabled',true);
-				alert('Alumni Registration Success!!!');
-				jQuery.ajax({
-					url:'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec',
-					type:'post',
-					data:jQuery('#alumniFrm').serialize(),
-					success:function(result){
-						jQuery('#alumniFrm')[0].reset();
-						jQuery('#btnSubmit').attr('disabled',false);
-						//window.location.href='';
-					}
-				})
-			})
-		</script>
+		<!-- <script>
+			const scriptURL = 'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec'
+            const form = document.forms['alumni-form']
+            // var spanner=document.getElementsByClassName("spanner");
+			// var overlay=document.getElementsByClassName("overlay");
+			var submitBtn=document.getElementById("submit-btn");
+			//var loader=document.getElementById("loader");
+
+            form.addEventListener('submit', e => {
+				
+              e.preventDefault()
+			//   spanner.classList.addClass("show");
+			//   overlay.classList.addClass("show");
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => alert("Alumni Registration Success!!!"))
+                .catch(error => console.error('Error!', error.message))
+				// spanner.classList.removeClass("show");
+				// overlay.classList.removeClass("show");
+				submitBtn.disabled=true;
+				//loader.style.display="block";
+
+				//loader.style.display = 'none';
+				submitBtn.disabled = false;
+
+            })
+			<script>-->
+        
+										<!--Form data enter into Sheet  -->
+
+										<script>
+											jQuery('#alumniFrm').on('submit',function(e){
+												e.preventDefault();
+												jQuery('#btnSubmit').attr('disabled',true);
+												alert('Alumni Registration Success!!!');
+												jQuery.ajax({
+													url:'https://script.google.com/macros/s/AKfycbxd1AZ_TP8Fk-UqwHSsFPkWGdNL2etIVG7STD_IdUnGgXg2CCCcMJtfU-vCjrikffTA/exec',
+													type:'post',
+													data:jQuery('#alumniFrm').serialize(),
+													success:function(result){
+														jQuery('#alumniFrm')[0].reset();
+														jQuery('#btnSubmit').attr('disabled',false);
+														//window.location.href='';
+													}
+												})
+											})
+										</script>
 		  	
 		<script type="text/javascript">
 			// $(function(){
@@ -344,5 +377,4 @@
 		</script>
 		 
     </body>
-
 </html>
